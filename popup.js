@@ -18,6 +18,8 @@ async function init() {
   const tabs = await browser.tabs.query({ active: true, currentWindow: true });
   if (tabs[0]) {
     currentTabId = tabs[0].id;
+    // Display favicon for current tab
+    displayCurrentTabFavicon(tabs[0]);
   }
   
   // Load current volume
@@ -89,6 +91,20 @@ function toggleTheme() {
   }
   
   browser.storage.local.set({ theme: newTheme });
+}
+
+/**
+ * Display favicon for current tab
+ */
+function displayCurrentTabFavicon(tab) {
+  const faviconEl = document.getElementById('currentTabFavicon');
+  if (tab.favIconUrl) {
+    faviconEl.src = tab.favIconUrl;
+    faviconEl.style.display = 'block';
+    faviconEl.alt = tab.title || 'Tab favicon';
+  } else {
+    faviconEl.style.display = 'none';
+  }
 }
 
 /**
@@ -167,16 +183,34 @@ async function loadAudioTabs() {
       const tabInfo = document.createElement('div');
       tabInfo.className = 'tab-info';
       
+      // Create title container with favicon
+      const titleContainer = document.createElement('div');
+      titleContainer.style.display = 'flex';
+      titleContainer.style.alignItems = 'center';
+      titleContainer.style.gap = '8px';
+      titleContainer.style.minWidth = '0';
+      titleContainer.style.flex = '1';
+      
+      // Add favicon if available
+      if (tab.favIconUrl) {
+        const favicon = document.createElement('img');
+        favicon.src = tab.favIconUrl;
+        favicon.className = 'tab-favicon-small';
+        favicon.alt = '';
+        titleContainer.appendChild(favicon);
+      }
+      
       const tabTitle = document.createElement('div');
       tabTitle.className = 'tab-title';
       tabTitle.title = tab.title;
       tabTitle.textContent = tab.title;
+      titleContainer.appendChild(tabTitle);
       
       const tabVolume = document.createElement('div');
       tabVolume.className = 'tab-volume';
       tabVolume.textContent = volumePercent + '%';
       
-      tabInfo.appendChild(tabTitle);
+      tabInfo.appendChild(titleContainer);
       tabInfo.appendChild(tabVolume);
       
       // Create tab actions section
