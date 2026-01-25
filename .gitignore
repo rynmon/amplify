@@ -19,6 +19,8 @@ TROUBLESHOOTING.md
 # Development tools
 icons/generate-icons.html
 icons/icon.svg
+generate-firefox-icons.py
+generate-firefox-icons.js
 
 # OS files
 .DS_Store
