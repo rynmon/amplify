@@ -1,4 +1,4 @@
-# ![Amplify Logo](icons/icon128.png) Amplify – Tab Volume Control
+# <img src="icons/icon128.png" alt="Amplify Logo" width="32" height="32"> Amplify – Tab Volume Control
 
 A Firefox extension that lets you boost audio volume up to 600% on any tab.
 
