@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Amplify</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="header-top">
+        <div class="logo-title">
+          <img src="icons/icon48.png" alt="Amplify" class="header-icon">
+          <h1>Amplify</h1>
+        </div>
+        <label class="theme-switch" title="Toggle dark/light mode">
+          <input type="checkbox" id="themeToggle">
+          <span class="switch-slider">
+            <span class="switch-icon sun">☀️</span>
+            <span class="switch-icon moon">🌙</span>
+          </span>
+        </label>
+      </div>
+      <p class="subtitle">Tab Volume Control – Up to 600%</p>
+    </div>
+    
+    <div class="current-tab-section">
+      <h2>Current Tab</h2>
+      <div class="volume-control">
+        <div class="volume-display">
+          <span id="volumeValue">100%</span>
+        </div>
+        <input 
+          type="range" 
+          id="volumeSlider" 
+          min="0" 
+          max="600" 
+          value="100" 
+          step="10"
+          class="slider"
+        >
+        <div class="volume-labels">
+          <span>0%</span>
+          <span>600%</span>
+        </div>
+        <div class="preset-buttons">
+          <button class="preset-btn" data-volume="0">0%</button>
+          <button class="preset-btn" data-volume="50">50%</button>
+          <button class="preset-btn" data-volume="100">100%</button>
+          <button class="preset-btn" data-volume="200">200%</button>
+          <button class="preset-btn" data-volume="600">Max</button>
+        </div>
+      </div>
+    </div>
+    
+    <div class="audio-tabs-section">
+      <h2>Tabs Playing Audio</h2>
+      <div id="audioTabsList" class="tabs-list">
+        <div class="loading">Loading...</div>
+      </div>
+    </div>
+    
+    <div class="footer">
+      <p>Made with ❤️ by Ryan Monaghan</p>
+    </div>
+  </div>
+  
+  <script src="popup.js"></script>
+</body>
+</html>

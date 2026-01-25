@@ -1,0 +1,32 @@
+# Build artifacts
+web-ext-artifacts/
+*.zip
+
+# Build scripts
+build-zip.ps1
+build.bat
+build.sh
+
+# Node modules (if using web-ext via npm)
+node_modules/
+
+# Development documentation
+DEBUGGING.md
+EXTENSION_ID_GUIDE.md
+RELEASE_CHECKLIST.md
+TROUBLESHOOTING.md
+
+# Development tools
+icons/generate-icons.html
+icons/icon.svg
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~

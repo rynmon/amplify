@@ -1,0 +1,12 @@
+# Icon files needed:
+# - icon16.png (16x16 pixels)
+# - icon48.png (48x48 pixels)  
+# - icon128.png (128x128 pixels)
+#
+# To generate icons:
+# 1. Open generate-icons.html in a web browser
+# 2. Click "Generate All Icons" button (or wait for auto-generation)
+# 3. Click the download links to save each icon
+# 4. Place the downloaded PNG files in this directory
+#
+# The source SVG is available as icon.svg
