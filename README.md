@@ -13,7 +13,7 @@ A Firefox extension that lets you boost audio volume up to 600% on any tab.
 ## Installation
 
 ### From Firefox Add-ons (Recommended)
-*Coming soon*
+https://addons.mozilla.org/en-GB/firefox/addon/amplify-tab-volume-control/
 
 ### Manual Installation (Development)
 1. Download or clone this repository
