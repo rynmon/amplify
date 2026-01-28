@@ -1,14 +1,24 @@
-# Build artifacts
+# Build artifacts and development folders
 web-ext-artifacts/
+dist/
+dev/
 *.zip
 
-# Build scripts
-build-zip.ps1
-build.bat
-build.sh
+# Build and setup scripts
+build-*.ps1
+setup-dev-*.ps1
 
 # Node modules (if using web-ext via npm)
 node_modules/
+
+# Legacy root-level files (replaced by src/ structure)
+background.js
+content.js
+manifest.json
+popup.css
+popup.html
+popup.js
+icons/
 
 # Development documentation
 DEBUGGING.md
@@ -17,8 +27,6 @@ RELEASE_CHECKLIST.md
 TROUBLESHOOTING.md
 
 # Development tools
-icons/generate-icons.html
-icons/icon.svg
 generate-firefox-icons.py
 generate-firefox-icons.js
 
