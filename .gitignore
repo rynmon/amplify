@@ -12,13 +12,14 @@ setup-dev-*.ps1
 node_modules/
 
 # Legacy root-level files (replaced by src/ structure)
-background.js
-content.js
-manifest.json
-popup.css
-popup.html
-popup.js
-icons/
+# Only ignore these in root, not in src/
+/background.js
+/content.js
+/manifest.json
+/popup.css
+/popup.html
+/popup.js
+/icons/
 
 # Development documentation
 DEBUGGING.md

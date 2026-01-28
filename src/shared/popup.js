@@ -1,8 +1,14 @@
 /**
  * Amplify – Tab Volume Control - Popup Script
+ * Works with both Firefox and Chromium browsers
  */
 
+// Browser API polyfill - use chrome.* for Chromium, browser.* for Firefox
+const browserAPI = typeof browser !== 'undefined' ? browser : chrome;
+
 let currentTabId = null;
+// Store references to tab items by tabId for syncing updates
+const tabItemRefs = new Map();
 
 /**
  * Initialize the popup
@@ -15,7 +21,7 @@ async function init() {
   document.getElementById('themeToggle').addEventListener('change', toggleTheme);
   
   // Get current tab
-  const tabs = await browser.tabs.query({ active: true, currentWindow: true });
+  const tabs = await browserAPI.tabs.query({ active: true, currentWindow: true });
   if (tabs[0]) {
     currentTabId = tabs[0].id;
     // Display favicon for current tab
@@ -33,6 +39,8 @@ async function init() {
     const percent = parseInt(e.target.value);
     display.textContent = percent + '%';
     setVolume(percent);
+    // Update corresponding tab item in audio tabs list if it exists
+    updateTabItemInList(currentTabId, percent);
   });
   
   // Set up preset buttons
@@ -42,6 +50,8 @@ async function init() {
       slider.value = percent;
       display.textContent = percent + '%';
       setVolume(percent);
+      // Update corresponding tab item in audio tabs list if it exists
+      updateTabItemInList(currentTabId, percent);
     });
   });
   
@@ -53,7 +63,7 @@ async function init() {
  * Load theme preference
  */
 function loadTheme() {
-  browser.storage.local.get('theme').then(result => {
+  browserAPI.storage.local.get('theme').then(result => {
     const theme = result.theme || 'dark';
     applyTheme(theme);
   }).catch(() => {
@@ -90,7 +100,7 @@ function toggleTheme() {
     document.body.classList.remove('light-theme');
   }
   
-  browser.storage.local.set({ theme: newTheme });
+  browserAPI.storage.local.set({ theme: newTheme });
 }
 
 /**
@@ -114,7 +124,7 @@ async function loadVolume() {
   if (!currentTabId) return;
   
   try {
-    const response = await browser.runtime.sendMessage({
+    const response = await browserAPI.runtime.sendMessage({
       action: 'getTabVolume',
       tabId: currentTabId
     });
@@ -138,7 +148,7 @@ async function setVolume(percent) {
   const volume = percent / 100;
   
   try {
-    await browser.runtime.sendMessage({
+    await browserAPI.runtime.sendMessage({
       action: 'setTabVolume',
       tabId: currentTabId,
       volume: volume
@@ -149,17 +159,37 @@ async function setVolume(percent) {
 }
 
 /**
+ * Update tab item in the audio tabs list when current tab volume changes
+ */
+function updateTabItemInList(tabId, percent) {
+  if (!tabId) return;
+  
+  const tabItemData = tabItemRefs.get(tabId);
+  if (tabItemData) {
+    // Update slider value
+    if (tabItemData.slider) {
+      tabItemData.slider.value = percent;
+    }
+    // Update volume display
+    if (tabItemData.volumeDisplay) {
+      tabItemData.volumeDisplay.textContent = percent + '%';
+    }
+  }
+}
+
+/**
  * Load audio tabs
  */
 async function loadAudioTabs() {
   const container = document.getElementById('audioTabsList');
   
   try {
-    const response = await browser.runtime.sendMessage({ action: 'getAudioTabs' });
+    const response = await browserAPI.runtime.sendMessage({ action: 'getAudioTabs' });
     const tabs = response.tabs || [];
     
     if (tabs.length === 0) {
       container.textContent = '';
+      tabItemRefs.clear(); // Clear old references
       const emptyState = document.createElement('div');
       emptyState.className = 'empty-state';
       emptyState.textContent = 'No tabs playing audio';
@@ -168,13 +198,14 @@ async function loadAudioTabs() {
     }
     
     container.textContent = '';
+    tabItemRefs.clear(); // Clear old references before rebuilding
     
     for (const tab of tabs) {
-      const volumeResponse = await browser.runtime.sendMessage({
+      const volumeResponse = await browserAPI.runtime.sendMessage({
         action: 'getTabVolume',
         tabId: tab.id
       });
-      const volumePercent = Math.round((volumeResponse.volume || 1.0) * 100);
+      const volumePercent = Math.round((volumeResponse.volume || 1.0) *100);
       
       const item = document.createElement('div');
       item.className = 'tab-item';
@@ -234,8 +265,53 @@ async function loadAudioTabs() {
       tabActions.appendChild(slider);
       tabActions.appendChild(switchBtn);
       
+      // Create preset buttons container (hidden by default, shown on hover)
+      const presetButtonsContainer = document.createElement('div');
+      presetButtonsContainer.className = 'tab-preset-buttons';
+      
+      // Store reference to this tab item for syncing updates
+      tabItemRefs.set(tab.id, {
+        slider: slider,
+        volumeDisplay: tabVolume,
+        presetButtons: presetButtonsContainer
+      });
+      
+      const presetValues = [0, 50, 100, 200, 600];
+      const presetLabels = ['0%', '50%', '100%', '200%', 'Max'];
+      
+      presetValues.forEach((value, index) => {
+        const presetBtn = document.createElement('button');
+        presetBtn.className = 'tab-preset-btn';
+        presetBtn.dataset.volume = value;
+        presetBtn.dataset.tabId = tab.id;
+        presetBtn.textContent = presetLabels[index];
+        
+        presetBtn.addEventListener('click', async (e) => {
+          const percent = parseInt(e.target.dataset.volume);
+          slider.value = percent;
+          tabVolume.textContent = percent + '%';
+          
+          await browserAPI.runtime.sendMessage({
+            action: 'setTabVolume',
+            tabId: tab.id,
+            volume: percent / 100
+          });
+          
+          // If this is the current tab, also update the current tab section
+          if (tab.id === currentTabId) {
+            const currentSlider = document.getElementById('volumeSlider');
+            const currentDisplay = document.getElementById('volumeValue');
+            if (currentSlider) currentSlider.value = percent;
+            if (currentDisplay) currentDisplay.textContent = percent + '%';
+          }
+        });
+        
+        presetButtonsContainer.appendChild(presetBtn);
+      });
+      
       item.appendChild(tabInfo);
       item.appendChild(tabActions);
+      item.appendChild(presetButtonsContainer);
       
       container.appendChild(item);
       
@@ -244,16 +320,24 @@ async function loadAudioTabs() {
         const percent = parseInt(e.target.value);
         tabVolume.textContent = percent + '%';
         
-        await browser.runtime.sendMessage({
+        await browserAPI.runtime.sendMessage({
           action: 'setTabVolume',
           tabId: tab.id,
           volume: percent / 100
         });
+        
+        // If this is the current tab, also update the current tab section
+        if (tab.id === currentTabId) {
+          const currentSlider = document.getElementById('volumeSlider');
+          const currentDisplay = document.getElementById('volumeValue');
+          if (currentSlider) currentSlider.value = percent;
+          if (currentDisplay) currentDisplay.textContent = percent + '%';
+        }
       });
       
       // Set up switch button event
       switchBtn.addEventListener('click', () => {
-        browser.runtime.sendMessage({
+        browserAPI.runtime.sendMessage({
           action: 'switchToTab',
           tabId: tab.id
         });

@@ -1,5 +1,5 @@
 /**
- * Amplify - Background Script
+ * Amplify - Background Script (Firefox)
  * Handles communication between popup and content scripts
  */
 

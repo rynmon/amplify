@@ -1,4 +1,4 @@
-# <img src="src/shared/icons/icon128.png" alt="Amplify Logo" width="32" height="32"> Amplify – Tab Volume Control
+# Amplify – Tab Volume Control
 
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 ![Version](https://img.shields.io/badge/version-1.1.0-green.svg)
@@ -22,22 +22,29 @@ The project is organized to support both Firefox and Chromium browsers:
 
 ```
 amplify/
-├── src/
-│   ├── shared/          # Shared files (popup UI, icons, CSS)
-│   │   ├── popup.html
-│   │   ├── popup.css
-│   │   ├── popup.js
-│   │   └── icons/
-│   ├── firefox/         # Firefox-specific files (MV2)
-│   │   ├── manifest.json
-│   │   ├── background.js
-│   │   └── content.js
-│   └── chromium/        # Chromium-specific files (MV3)
-│       ├── manifest.json
-│       ├── service-worker.js
-│       ├── content.js
-│       └── page-context.js
-└── README.md
+├── .gitignore
+├── LICENSE
+├── README.md
+└── src/
+    ├── shared/              # Shared files (popup UI, icons, CSS)
+    │   ├── popup.html
+    │   ├── popup.css
+    │   ├── popup.js
+    │   └── icons/
+    │       ├── icon16.png
+    │       ├── icon32.png
+    │       ├── icon48.png
+    │       ├── icon64.png
+    │       └── icon128.png
+    ├── firefox/             # Firefox-specific files (MV2)
+    │   ├── manifest.json
+    │   ├── background.js
+    │   └── content.js
+    └── chromium/            # Chromium-specific files (MV3)
+        ├── manifest.json
+        ├── service-worker.js
+        ├── content.js
+        └── page-context.js
 ```
 
 ## Installation

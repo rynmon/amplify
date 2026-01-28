@@ -1,0 +1,51 @@
+{
+  "manifest_version": 3,
+  "name": "Amplify – Tab Volume Control",
+  "version": "1.1.0",
+  "description": "Boost volume up to 600% - Control and amplify audio on any tab with fine-grained control",
+  "author": "Ryan Monaghan",
+  
+  "permissions": [
+    "tabs",
+    "storage"
+  ],
+  
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  
+  "background": {
+    "service_worker": "service-worker.js"
+  },
+  
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "run_at": "document_start",
+      "all_frames": true
+    }
+  ],
+  
+  "action": {
+    "default_popup": "../shared/popup.html",
+    "default_icon": {
+      "16": "../shared/icons/icon16.png",
+      "48": "../shared/icons/icon48.png",
+      "128": "../shared/icons/icon128.png"
+    }
+  },
+  
+  "icons": {
+    "16": "../shared/icons/icon16.png",
+    "48": "../shared/icons/icon48.png",
+    "128": "../shared/icons/icon128.png"
+  },
+  
+  "web_accessible_resources": [
+    {
+      "resources": ["page-context.js"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}
