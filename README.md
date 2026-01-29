@@ -2,8 +2,13 @@
 
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 ![Version](https://img.shields.io/badge/version-1.1.0-green.svg)
+![Maintenance](https://img.shields.io/badge/maintenance-actively--developed-brightgreen.svg)
 ![Firefox](https://img.shields.io/badge/Firefox-142.0+-orange.svg)
 ![Chrome](https://img.shields.io/badge/Chrome-MV3-blue.svg)
+[![Firefox Add-on](https://img.shields.io/amo/v/amplify-tab-volume-control?label=Firefox%20Add-on&logo=firefox)](https://addons.mozilla.org/en-GB/firefox/addon/amplify-tab-volume-control/)
+![Chrome Web Store](https://img.shields.io/badge/Chrome%20Web%20Store-coming%20soon-yellow.svg)
+![Contributions Welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)
+![Made with](https://img.shields.io/badge/made%20with-JavaScript%20%26%20Web%20Audio%20API-yellow.svg)
 
 A browser extension that lets you boost audio volume up to 600% on any tab. Available for both Firefox and Chromium-based browsers (Chrome, Edge, Brave, etc.).
 
