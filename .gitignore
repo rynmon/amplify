@@ -4,8 +4,7 @@ dist/
 dev/
 *.zip
 
-# Build and setup scripts
-build-*.ps1
+# Setup scripts (development only, not needed for building)
 setup-dev-*.ps1
 
 # Node modules (if using web-ext via npm)
