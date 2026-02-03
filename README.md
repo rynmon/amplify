@@ -6,7 +6,7 @@
 ![Firefox](https://img.shields.io/badge/Firefox-142.0+-orange.svg)
 ![Chrome](https://img.shields.io/badge/Chrome-MV3-blue.svg)
 [![Firefox Add-on](https://img.shields.io/amo/v/amplify-tab-volume-control?label=Firefox%20Add-on&logo=firefox)](https://addons.mozilla.org/en-GB/firefox/addon/amplify-tab-volume-control/)
-![Chrome Web Store](https://img.shields.io/badge/Chrome%20Web%20Store-coming%20soon-yellow.svg)
+[![Chrome Web Store](https://img.shields.io/chrome-web-store/v/odeapfmmnjmdanmhedlcmlbaclnffjpb?label=Chrome%20Web%20Store&logo=googlechrome)](https://chromewebstore.google.com/detail/amplify-%E2%80%93-tab-volume-cont/odeapfmmnjmdanmhedlcmlbaclnffjpb)
 ![Contributions Welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)
 ![Made with](https://img.shields.io/badge/made%20with-JavaScript%20%26%20Web%20Audio%20API-yellow.svg)
 
@@ -67,6 +67,9 @@ https://addons.mozilla.org/en-GB/firefox/addon/amplify-tab-volume-control/
 5. Select the `dev/firefox/manifest.json` file
 
 ### Chromium (Chrome, Edge, Brave, etc.)
+
+#### From Chrome Web Store (Recommended)
+[Install Amplify from the Chrome Web Store](https://chromewebstore.google.com/detail/amplify-%E2%80%93-tab-volume-cont/odeapfmmnjmdanmhedlcmlbaclnffjpb)
 
 #### Manual Installation (Development)
 1. Download or clone this repository
